@@ -1,5 +1,4 @@
 import {
-  DataTable,
   Table,
   TableHead,
   TableRow,
@@ -53,47 +52,32 @@ export default function HourlyDetailTable({ intervals, dayLabel }) {
       <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>
         3-Hour Forecast{dayLabel ? ` — ${dayLabel}` : ''}
       </h3>
-      <DataTable rows={rows} headers={headers} isSortable={false} size="lg">
-        {({ rows: tableRows, headers: tableHeaders, getTableProps, getHeaderProps, getRowProps }) => (
-          <Table {...getTableProps()} style={{ tableLayout: 'auto' }}>
-            <TableHead>
-              <TableRow>
-                {tableHeaders.map((header) => {
-                  const { key, ...headerProps } = getHeaderProps({ header });
-
-                  return (
-                    <TableHeader key={key} {...headerProps}>
-                      {header.header}
-                    </TableHeader>
-                  );
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tableRows.map((row) => {
-                const originalRow = rows.find((r) => r.id === row.id);
-                const { key, ...rowProps } = getRowProps({ row });
-
-                return (
-                  <TableRow key={key || row.id} {...rowProps}>
-                    {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>
-                        {cell.info.header === 'temp' ? (
-                          <span className={getTempClass(originalRow?._tempValue)} style={{ fontWeight: 600 }}>
-                            {cell.value}°
-                          </span>
-                        ) : (
-                          cell.value
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        )}
-      </DataTable>
+      <Table size="lg" style={{ tableLayout: 'auto' }}>
+        <TableHead>
+          <TableRow>
+            {headers.map((header) => (
+              <TableHeader key={header.key}>{header.header}</TableHeader>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              {headers.map((header) => (
+                <TableCell key={`${row.id}-${header.key}`}>
+                  {header.key === 'temp' ? (
+                    <span className={getTempClass(row._tempValue)} style={{ fontWeight: 600 }}>
+                      {row[header.key]}°
+                    </span>
+                  ) : (
+                    row[header.key]
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </Tile>
   );
 }
