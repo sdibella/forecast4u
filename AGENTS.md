@@ -1,74 +1,93 @@
-# Forecast4U - Agent Instructions
+# AGENTS.md — Forecast4U
 
-## Project Overview
-This is a React + Vite weather forecast application built with IBM Carbon Design System and Builder.io visual CMS. It displays 5-day weather forecasts with 3-hour increments for US ZIP codes.
+## Project overview
+A React + Vite weather forecast prototype using IBM Carbon Design System and Builder.io.
+Route `/weather/:zip` shows a 5-day forecast with 3-hour intervals fetched from Open-Meteo.
+The app is registered with Builder.io for visual editing — IBM Carbon components and custom
+Forecast4U components are indexed and available in the drag-and-drop editor.
 
-## Tech Stack
-- **Framework**: React 18 + Vite
-- **Design System**: IBM Carbon (`@carbon/react`)
-- **CMS**: Builder.io (`@builder.io/react`)
-- **Charts**: Recharts
-- **Testing**: Vitest + React Testing Library
-- **Styling**: SCSS with Carbon tokens
+## Dev environment
 
-## Code Conventions
-- Functional components with hooks
-- Named exports for utilities, default exports for components
-- JSDoc comments on all exported functions
-- Descriptive variable names, no abbreviations
+- Start dev server: `npm run dev` (http://localhost:5173)
+- Or with Docker: `docker compose up dev`
+- Build: `npm run build`
+- Preview production build: `npm run preview`
+- Storybook: `cd storybook && npm run storybook` (http://localhost:6006)
 
-## Testing Requirements
+## Testing instructions
 
-**IMPORTANT: Every code change MUST include unit tests.**
+- Run all tests: `npm test`
+- Run with coverage: `npm run test:coverage`
+- Run a single test: `npx vitest run -t "<test name>"`
+- Fix any failing tests before committing — the full suite must be green.
+- **Add or update tests for every code change, even if nobody asked.**
+- Place test files alongside the source file: `utils/foo.js` → `utils/foo.test.js`, `components/Bar.jsx` → `components/Bar.test.jsx`
+- Use `describe` / `it` / `expect` from `vitest`.
+- Use `render` / `screen` / `fireEvent` / `userEvent` from `@testing-library/react`.
+- Mock all external API calls (Open-Meteo, geocoding, Builder.io) with `vi.fn()` — never make real network requests in tests.
+- Always test both the happy path and error/edge cases.
+- Aim for meaningful assertions, not just "it renders without crashing".
 
-When generating or modifying code:
-1. **Always** create or update corresponding `.test.js` files
-2. Place test files alongside the source file (e.g., `utils/foo.js` → `utils/foo.test.js`)
-3. Use Vitest (`describe`, `it`, `expect`) and React Testing Library (`render`, `screen`, `fireEvent`)
-4. Test files should import from `vitest` and `@testing-library/react`
-5. Mock external API calls with `vi.fn()` and `vi.mock()`
-6. Aim for meaningful assertions, not just snapshot tests
-7. Test both happy paths and error cases
-
-### Test patterns to follow:
-```javascript
-import { describe, it, expect, vi } from 'vitest';
+### Test file template
+```js
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import MyComponent from './MyComponent';
 
-describe('ComponentName', () => {
-  it('renders correctly with default props', () => {
-    render(<Component />);
-    expect(screen.getByText('expected text')).toBeInTheDocument();
+describe('MyComponent', () => {
+  it('renders with default props', () => {
+    render(<MyComponent />);
+    expect(screen.getByRole('...')).toBeInTheDocument();
   });
 
   it('handles error state', () => {
-    render(<Component error="Something went wrong" />);
+    render(<MyComponent error="Something went wrong" />);
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
   });
 });
 ```
 
-### Running tests:
-```bash
-npm test          # Watch mode
-npm run test:coverage  # Coverage report
+## Code conventions
+
+- Functional components with hooks only — no class components.
+- Named exports for utilities and hooks; default exports for page and component files.
+- JSDoc comments on all exported functions and components.
+- Descriptive variable names — no single-letter abbreviations outside of loop indices.
+- Use Carbon design tokens (`var(--cds-*)`) for all colors, spacing, and typography — never hardcode hex values.
+- Use the Carbon `<Grid>` / `<Column>` system for all layouts.
+- Support both `white` (light) and `g100` (dark) Carbon themes — test UI in both.
+
+## Design system
+
+- **Package**: `@carbon/react`
+- **Indexed name**: `IBM Carbon` (registered in `builder.config.json`)
+- Import components from `@carbon/react` and icons from `@carbon/react/icons`.
+- When generating new UI, prefer Carbon primitives (`Tile`, `Button`, `DataTable`, etc.) over custom HTML.
+- New components should be registered in `src/components/builder-registry.js` so they appear in the Builder.io visual editor.
+
+## File structure
+
+```
+src/
+  components/
+    builder-registry.js   ← register new components here
+    weather/              ← weather display components + tests
+    layout/               ← AppHeader etc.
+    common/               ← shared/skeleton components
+  pages/                  ← route-level components
+  hooks/                  ← custom React hooks
+  utils/                  ← API clients, helpers (each has a .test.js)
+  styles/                 ← global SCSS
+storybook/                ← standalone Storybook app
+AGENTS.md                 ← this file
+builder.config.json       ← Builder.io design system config
+.builder/rules/           ← scoped AI rules
+.builderrules             ← root-level AI rules
 ```
 
-## File Structure
-- `src/components/` - React components organized by feature
-- `src/pages/` - Route-level page components
-- `src/hooks/` - Custom React hooks
-- `src/utils/` - Utility functions and API clients
-- `src/styles/` - Global SCSS styles
-- `src/components/builder-registry.js` - Builder.io component registration
+## PR checklist
 
-## API Integration
-- Weather data: Open-Meteo API (free, no key required)
-- Geocoding: Open-Meteo Geocoding API
-- CMS content: Builder.io Content API
-
-## Design System
-- Use IBM Carbon components from `@carbon/react`
-- Use Carbon color tokens (e.g., `var(--cds-text-primary)`)
-- Support both light (`white`) and dark (`g100`) themes
-- Follow Carbon grid system for responsive layouts
+- `npm run test` passes with no failures.
+- `npm run build` completes without errors.
+- New components are registered in `builder-registry.js`.
+- Test files exist for any new utilities or components.

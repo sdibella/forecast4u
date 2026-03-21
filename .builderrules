@@ -1,0 +1,14 @@
+# Forecast4U — Builder.io AI Rules
+
+This project uses IBM Carbon Design System (@carbon/react) and Builder.io for visual editing.
+
+## Always do this for every code change
+- Add or update unit tests. Never skip this, even for small changes.
+- Use Carbon components from `@carbon/react` instead of plain HTML where a Carbon equivalent exists.
+- Register any new React components in `src/components/builder-registry.js`.
+- Use `var(--cds-*)` Carbon tokens for colors and spacing — never hardcode values.
+
+## Never do this
+- Never make real network requests in test files — always mock with `vi.fn()`.
+- Never import CSS directly from `@carbon/react` individual files — the global `@use '@carbon/react'` in `app.scss` handles it.
+- Never use class components.

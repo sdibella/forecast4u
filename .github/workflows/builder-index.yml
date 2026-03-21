@@ -1,0 +1,37 @@
+name: Update Builder.io Design System Index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Re-index when Carbon usage or custom components change
+      - 'src/components/**'
+      - 'package.json'
+
+jobs:
+  index-design-system:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Index IBM Carbon design system into Builder.io
+        run: |
+          npx "@builder.io/dev-tools@latest" index-repo \
+            --skipHeader \
+            --designSystemPackage @carbon/react \
+            --designSystemName "IBM Carbon"
+        env:
+          BUILDER_PUBLIC_KEY: ${{ secrets.BUILDER_PUBLIC_KEY }}
+          BUILDER_PRIVATE_KEY: ${{ secrets.BUILDER_PRIVATE_KEY }}
+          BUILDER_USER_ID: ${{ secrets.BUILDER_USER_ID }}
