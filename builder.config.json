@@ -1,5 +1,5 @@
 {
   "repoIndexingConfig": {
-    "designSystems": ["IBM Carbon"]
+    "designSystems": ["carbon-react"]
   }
 }

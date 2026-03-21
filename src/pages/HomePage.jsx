@@ -46,7 +46,7 @@ export default function HomePage({ onDetectLocation, detectingLocation }) {
       {/* Hero section */}
       <Grid>
         <Column lg={{ span: 8, offset: 4 }} md={{ span: 6, offset: 1 }} sm={4}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div className="stagger-1" style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 300, marginBottom: '0.75rem' }}>
               Forecast4U
             </h1>
@@ -104,7 +104,7 @@ export default function HomePage({ onDetectLocation, detectingLocation }) {
             {savedLocations.map((loc) => (
               <Column key={loc.zip} lg={4} md={4} sm={4} style={{ marginBottom: '0.5rem' }}>
                 <ClickableTile
-                  className="forecast-card"
+                  className="forecast-card stagger-2"
                   onClick={() => navigate(`/weather/${loc.zip}`)}
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                 >
@@ -138,7 +138,7 @@ export default function HomePage({ onDetectLocation, detectingLocation }) {
         <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.75rem' }}>
           Popular Locations
         </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div className="stagger-3" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
           {POPULAR_LOCATIONS.map((loc) => (
             <Tag
               key={loc.zip}
