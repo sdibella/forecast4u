@@ -34,9 +34,48 @@ A proof-of-value weather forecast prototype built with **React + Vite**, **Build
 
 ## Quick Start
 
+### Option A: Docker (recommended)
+
+Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+```bash
+git clone https://github.com/YOUR_USERNAME/forecast4u.git
+cd forecast4u
+cp .env.example .env
+# Edit .env and add your Builder.io public API key
+```
+
+**Development server with hot-reload:**
+```bash
+docker compose up dev
+```
+Open [http://localhost:5173](http://localhost:5173)
+
+**Production build preview (nginx):**
+```bash
+docker compose up prod
+```
+Open [http://localhost:8080](http://localhost:8080)
+
+**Storybook:**
+```bash
+docker compose up storybook
+```
+Open [http://localhost:6006](http://localhost:6006)
+
+**Run tests inside the container:**
+```bash
+docker compose run --rm dev npm test
+docker compose run --rm dev npm run test:coverage
+```
+
+---
+
+### Option B: Local Node.js
+
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm 9+
 
 ### 1. Clone & Install
