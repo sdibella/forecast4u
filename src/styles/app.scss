@@ -1,0 +1,102 @@
+@use '@carbon/react';
+@use '@carbon/themes/scss/themes' as *;
+@use '@carbon/react/scss/theme' as theme;
+
+// Custom Forecast4U theme overrides
+:root {
+  --f4u-transition-speed: 0.3s;
+  --f4u-card-radius: 8px;
+  --f4u-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --f4u-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --f4u-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+// Page transitions
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--f4u-transition-speed) ease,
+    transform var(--f4u-transition-speed) ease;
+}
+
+// Skeleton loading animation
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-loader {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--f4u-card-radius);
+}
+
+// Weather condition animations
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.weather-icon-animated {
+  animation: float 3s ease-in-out infinite;
+}
+
+// Forecast card hover effects
+.forecast-card {
+  transition: transform var(--f4u-transition-speed) ease,
+    box-shadow var(--f4u-transition-speed) ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--f4u-shadow-md);
+  }
+}
+
+// Responsive utilities
+.container-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Temperature color scale
+.temp-cold { color: #0043ce; }
+.temp-cool { color: #4589ff; }
+.temp-mild { color: #24a148; }
+.temp-warm { color: #f1c21b; }
+.temp-hot { color: #da1e28; }
+
+// Dark mode support - Carbon handles this via theme provider,
+// but we add custom dark mode tweaks here
+[data-carbon-theme='g100'],
+[data-carbon-theme='g90'] {
+  .forecast-card {
+    border: 1px solid var(--cds-border-subtle);
+  }
+
+  .skeleton-loader {
+    background: linear-gradient(90deg, #393939 25%, #525252 50%, #393939 75%);
+    background-size: 200% 100%;
+  }
+}
+
+// Smooth scroll behavior
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
