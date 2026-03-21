@@ -79,20 +79,24 @@ export default function WeatherPage() {
         <SkeletonForecast />
       ) : (
         <div className="page-enter page-enter-active">
-          {/* Current conditions */}
-          <CurrentConditions
-            current={data.current}
-            locationName={location?.name || zip}
-            locationState={location?.state}
-          />
+          {/* Current conditions (staggered animated) */}
+          <div className="stagger-1">
+            <CurrentConditions
+              current={data.current}
+              locationName={location?.name || zip}
+              locationState={location?.state}
+            />
+          </div>
 
           {/* 5-day forecast cards */}
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>
-            5-Day Forecast
-          </h2>
+          <div className="stagger-2">
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>
+              5-Day Forecast
+            </h2>
+          </div>
           <Grid narrow>
             {data.forecastByDay.map((day, idx) => (
-              <Column key={day.date} lg={3} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+              <Column key={day.date} lg={3} md={4} sm={4} style={{ marginBottom: '1rem' }} className={`stagger-${Math.min((idx % 5) + 1, 5)}`}>
                 <DailyForecastCard
                   day={day}
                   isSelected={idx === selectedDay}
@@ -104,18 +108,22 @@ export default function WeatherPage() {
 
           {/* Interactive chart for selected day */}
           {data.forecastByDay[selectedDay] && (
-            <ForecastChart
-              intervals={data.forecastByDay[selectedDay].intervals}
-              dayLabel={formatDate(data.forecastByDay[selectedDay].date)}
-            />
+            <div className="stagger-4" style={{ marginTop: '1.5rem' }}>
+              <ForecastChart
+                intervals={data.forecastByDay[selectedDay].intervals}
+                dayLabel={formatDate(data.forecastByDay[selectedDay].date)}
+              />
+            </div>
           )}
 
           {/* 3-hour detail table for selected day */}
           {data.forecastByDay[selectedDay] && (
-            <HourlyDetailTable
-              intervals={data.forecastByDay[selectedDay].intervals}
-              dayLabel={formatDate(data.forecastByDay[selectedDay].date)}
-            />
+            <div className="stagger-5">
+              <HourlyDetailTable
+                intervals={data.forecastByDay[selectedDay].intervals}
+                dayLabel={formatDate(data.forecastByDay[selectedDay].date)}
+              />
+            </div>
           )}
 
           {/* Builder.io managed content (if any) */}

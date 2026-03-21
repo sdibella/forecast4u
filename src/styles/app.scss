@@ -2,32 +2,37 @@
 @use '@carbon/themes/scss/themes' as *;
 @use '@carbon/react/scss/theme' as theme;
 
-// Custom Forecast4U theme overrides
+// Custom Forecast4U theme overrides - Strictly adhering to Carbon
 :root {
-  --f4u-transition-speed: 0.3s;
-  --f4u-card-radius: 8px;
+  --f4u-transition-speed: 0.25s;
+  --f4u-card-radius: 4px; // Carbon typically uses minimal or no border radius, but we'll stick to a subtle one if needed.
   --f4u-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
   --f4u-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
   --f4u-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-// Page transitions
+// Page transitions (using Carbon easing if possible)
 .page-enter {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(1rem);
 }
 
 .page-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity var(--f4u-transition-speed) ease,
-    transform var(--f4u-transition-speed) ease;
+  transition: opacity 0.4s cubic-bezier(0.2, 0, 0.38, 0.9),
+    transform 0.4s cubic-bezier(0.2, 0, 0.38, 0.9);
 }
 
 // Skeleton loading animation
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .skeleton-loader {
@@ -39,28 +44,65 @@
 
 // Weather condition animations
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .weather-icon-animated {
   animation: float 3s ease-in-out infinite;
+  display: inline-block;
 }
 
 // Forecast card hover effects
 .forecast-card {
-  transition: transform var(--f4u-transition-speed) ease,
-    box-shadow var(--f4u-transition-speed) ease;
+  transition: transform var(--f4u-transition-speed) cubic-bezier(0.2, 0, 0.38, 0.9),
+    box-shadow var(--f4u-transition-speed) cubic-bezier(0.2, 0, 0.38, 0.9);
+  will-change: transform, box-shadow;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--f4u-shadow-md);
   }
+}
+
+// Staggered entrance animation for lists/cards
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-1 {
+  animation: fadeInSlideUp 0.4s cubic-bezier(0.2, 0, 0.38, 0.9) 0.1s both;
+}
+
+.stagger-2 {
+  animation: fadeInSlideUp 0.4s cubic-bezier(0.2, 0, 0.38, 0.9) 0.15s both;
+}
+
+.stagger-3 {
+  animation: fadeInSlideUp 0.4s cubic-bezier(0.2, 0, 0.38, 0.9) 0.2s both;
+}
+
+.stagger-4 {
+  animation: fadeInSlideUp 0.4s cubic-bezier(0.2, 0, 0.38, 0.9) 0.25s both;
+}
+
+.stagger-5 {
+  animation: fadeInSlideUp 0.4s cubic-bezier(0.2, 0, 0.38, 0.9) 0.3s both;
 }
 
 // Responsive utilities
@@ -71,14 +113,27 @@
 }
 
 // Temperature color scale
-.temp-cold { color: #0043ce; }
-.temp-cool { color: #4589ff; }
-.temp-mild { color: #24a148; }
-.temp-warm { color: #f1c21b; }
-.temp-hot { color: #da1e28; }
+.temp-cold {
+  color: #0043ce;
+}
 
-// Dark mode support - Carbon handles this via theme provider,
-// but we add custom dark mode tweaks here
+.temp-cool {
+  color: #4589ff;
+}
+
+.temp-mild {
+  color: #24a148;
+}
+
+.temp-warm {
+  color: #f1c21b;
+}
+
+.temp-hot {
+  color: #da1e28;
+}
+
+// Dark mode support
 [data-carbon-theme='g100'],
 [data-carbon-theme='g90'] {
   .forecast-card {
@@ -99,4 +154,6 @@ html {
 body {
   margin: 0;
   padding: 0;
+  color: var(--cds-text-primary);
+  background-color: var(--cds-background);
 }

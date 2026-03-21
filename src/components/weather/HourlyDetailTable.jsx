@@ -58,18 +58,24 @@ export default function HourlyDetailTable({ intervals, dayLabel }) {
           <Table {...getTableProps()} style={{ tableLayout: 'auto' }}>
             <TableHead>
               <TableRow>
-                {tableHeaders.map((header) => (
-                  <TableHeader key={header.key} {...getHeaderProps({ header })}>
-                    {header.header}
-                  </TableHeader>
-                ))}
+                {tableHeaders.map((header) => {
+                  const { key, ...headerProps } = getHeaderProps({ header });
+
+                  return (
+                    <TableHeader key={key} {...headerProps}>
+                      {header.header}
+                    </TableHeader>
+                  );
+                })}
               </TableRow>
             </TableHead>
             <TableBody>
               {tableRows.map((row) => {
                 const originalRow = rows.find((r) => r.id === row.id);
+                const { key, ...rowProps } = getRowProps({ row });
+
                 return (
-                  <TableRow key={row.id} {...getRowProps({ row })}>
+                  <TableRow key={key || row.id} {...rowProps}>
                     {row.cells.map((cell) => (
                       <TableCell key={cell.id}>
                         {cell.info.header === 'temp' ? (
