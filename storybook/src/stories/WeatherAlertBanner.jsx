@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Tile,
   Button,
@@ -45,30 +45,22 @@ export default function WeatherAlertBanner({
   const severityConfig = {
     extreme: {
       tagType: 'red',
-      borderColor: '#da1e28',
-      bgColor: '#fff1f1',
-      darkBgColor: '#520408',
+      borderColor: 'var(--cds-support-error, #da1e28)',
       label: 'Extreme',
     },
     severe: {
       tagType: 'magenta',
-      borderColor: '#d02670',
-      bgColor: '#fff0f7',
-      darkBgColor: '#510224',
+      borderColor: 'var(--cds-support-error, #d02670)',
       label: 'Severe',
     },
     moderate: {
-      tagType: 'orange',
-      borderColor: '#eb6200',
-      bgColor: '#fff2e8',
-      darkBgColor: '#3e1a00',
+      tagType: 'warm-gray',
+      borderColor: 'var(--cds-support-warning, #eb6200)',
       label: 'Moderate',
     },
     minor: {
       tagType: 'teal',
-      borderColor: '#009d9a',
-      bgColor: '#d9fbfb',
-      darkBgColor: '#004144',
+      borderColor: 'var(--cds-support-success, #009d9a)',
       label: 'Minor',
     },
   };

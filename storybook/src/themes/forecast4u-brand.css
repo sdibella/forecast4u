@@ -1,0 +1,74 @@
+/**
+ * Forecast4U Brand Theme
+ *
+ * Overrides Carbon v11 CSS custom properties to apply the Forecast4U
+ * brand palette. Scoped to .cds--f4u so it composes cleanly with
+ * Carbon's built-in light/dark themes (white, g10, g90, g100).
+ *
+ * To apply: add class="cds--f4u" to any container, or use the
+ * "Forecast4U Brand" option in the Storybook theme toolbar.
+ *
+ * Token reference: https://carbondesignsystem.com/elements/color/tokens/
+ */
+
+/* ── Forecast4U palette ───────────────────────────────────────────────
+   Primary:  Deep Weather Blue  #1B3D6F
+   Hover:                       #142D52
+   Active:                      #0D1F39
+   Accent:   Storm Amber        #D97706  (replaces IBM yellow-60)
+   Danger:   Alert Red          #B91C1C  (deepened from IBM red-60)
+   Success:  Clear Sky Teal     #0E7490
+   ──────────────────────────────────────────────────────────────────── */
+
+.cds--f4u {
+  /* Interactive / primary action */
+  --cds-interactive: #1B3D6F;
+
+  /* Buttons */
+  --cds-button-primary: #1B3D6F;
+  --cds-button-primary-hover: #142D52;
+  --cds-button-primary-active: #0D1F39;
+
+  /* Links */
+  --cds-link-primary: #1B3D6F;
+  --cds-link-primary-hover: #142D52;
+  --cds-link-visited: #4A235A;
+  --cds-link-inverse: #74B3FF;
+
+  /* Focus ring */
+  --cds-focus: #1B3D6F;
+  --cds-focus-inset: #ffffff;
+
+  /* Support / semantic colors */
+  --cds-support-error: #B91C1C;
+  --cds-support-error-inverse: #FFE4E4;
+  --cds-support-warning: #D97706;
+  --cds-support-warning-inverse: #FEF3C7;
+  --cds-support-success: #0E7490;
+  --cds-support-success-inverse: #E0F7FA;
+  --cds-support-info: #1B3D6F;
+  --cds-support-info-inverse: #EFF4FF;
+
+  /* Tags — blue family → brand navy */
+  --cds-tag-background-blue: #1B3D6F;
+  --cds-tag-color-blue: #ffffff;
+  --cds-tag-hover-blue: #142D52;
+
+  /* Tags — teal family → clear-sky teal */
+  --cds-tag-background-teal: #0E7490;
+  --cds-tag-color-teal: #ffffff;
+  --cds-tag-hover-teal: #0B5C73;
+
+  /* Notification backgrounds (inline) */
+  --cds-notification-background-error: #FFF1F2;
+  --cds-notification-background-warning: #FFFBEB;
+  --cds-notification-background-success: #F0FDFF;
+  --cds-notification-background-info: #EFF4FF;
+
+  /* Selected state */
+  --cds-layer-selected: #D1E0F5;
+  --cds-layer-selected-hover: #B8CDE8;
+
+  /* Highlight */
+  --cds-highlight: #D1E0F5;
+}

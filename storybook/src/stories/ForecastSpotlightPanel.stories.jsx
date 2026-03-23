@@ -1,3 +1,4 @@
+import React from 'react';
 import ForecastSpotlightPanel from './ForecastSpotlightPanel';
 
 export default {

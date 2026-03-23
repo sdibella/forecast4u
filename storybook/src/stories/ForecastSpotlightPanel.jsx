@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Column, Grid, Tag, Tile } from '@carbon/react';
 import { ArrowRight, Location, RecentlyViewed, WarningAlt } from '@carbon/react/icons';
 

@@ -1,4 +1,5 @@
-import '@carbon/react/index.scss';
+import '@carbon/styles/css/styles.css';
+import '../src/themes/forecast4u-brand.css';
 import { withThemeByClassName } from '@storybook/addon-themes';
 
 /** @type { import('@storybook/react').Preview } */
@@ -19,6 +20,7 @@ const preview = {
         'Gray 10 (Light)': 'cds--g10',
         'Gray 90 (Dark)': 'cds--g90',
         'Gray 100 (Dark)': 'cds--g100',
+        'Forecast4U Brand': 'cds--f4u',
       },
       defaultTheme: 'White (Light)',
     }),
