@@ -1,3 +1,4 @@
+import React from 'react';
 import { TextInput, NumberInput, PasswordInput, Search, TextArea } from '@carbon/react';
 
 export default {

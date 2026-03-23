@@ -1,3 +1,4 @@
+import React from 'react';
 import WeatherAlertBanner from './WeatherAlertBanner';
 
 export default {
