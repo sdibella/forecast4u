@@ -9,7 +9,6 @@ import {
   BreadcrumbItem,
 } from '@carbon/react';
 import { ArrowLeft } from '@carbon/react/icons';
-import { BuilderComponent, builder } from '@builder.io/react';
 import { useWeather } from '../hooks/useWeather';
 import { useSavedLocations } from '../hooks/useSavedLocations';
 import CurrentConditions from '../components/weather/CurrentConditions';
@@ -29,7 +28,6 @@ export default function WeatherPage() {
   const { data, location, loading, error } = useWeather(zip);
   const { addLocation } = useSavedLocations();
   const [selectedDay, setSelectedDay] = useState(0);
-  const [builderContent, setBuilderContent] = useState(null);
 
   // Save location when loaded
   useEffect(() => {
@@ -37,15 +35,6 @@ export default function WeatherPage() {
       addLocation(zip, location.name, location.state);
     }
   }, [location, zip, addLocation]);
-
-  // Fetch Builder.io content for this page model
-  useEffect(() => {
-    builder
-      .get('weather-page', { url: `/weather/${zip}` })
-      .promise()
-      .then(setBuilderContent)
-      .catch(() => setBuilderContent(null));
-  }, [zip]);
 
   if (error) {
     return (
@@ -123,13 +112,6 @@ export default function WeatherPage() {
                 intervals={data.forecastByDay[selectedDay].intervals}
                 dayLabel={formatDate(data.forecastByDay[selectedDay].date)}
               />
-            </div>
-          )}
-
-          {/* Builder.io managed content (if any) */}
-          {builderContent && (
-            <div style={{ marginTop: '2rem' }}>
-              <BuilderComponent model="weather-page" content={builderContent} />
             </div>
           )}
         </div>

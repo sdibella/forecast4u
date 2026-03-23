@@ -3,10 +3,10 @@ import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { Theme } from '@carbon/react';
 import { builder } from '@builder.io/react';
 
-// Register Builder.io components BEFORE init
+// Register components with the Builder.io visual editor
 import './components/builder-registry';
 
-// Initialize Builder.io
+// Authenticate with Builder.io Fusion project
 builder.init(import.meta.env.VITE_BUILDER_API_KEY);
 
 // Pages

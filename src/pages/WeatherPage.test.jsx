@@ -5,19 +5,6 @@ import WeatherPage from './WeatherPage';
 import { useWeather } from '../hooks/useWeather';
 import { useSavedLocations } from '../hooks/useSavedLocations';
 
-const { builderGet } = vi.hoisted(() => ({
-  builderGet: vi.fn(),
-}));
-
-vi.mock('@builder.io/react', () => ({
-  builder: {
-    get: builderGet,
-  },
-  BuilderComponent: ({ model, content }) => (
-    <div data-testid={`builder-${model}`}>{content?.id || 'builder-content'}</div>
-  ),
-}));
-
 vi.mock('../hooks/useWeather', () => ({
   useWeather: vi.fn(),
 }));
@@ -80,9 +67,6 @@ describe('WeatherPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useSavedLocations.mockReturnValue({ addLocation });
-    builderGet.mockReturnValue({
-      promise: () => Promise.resolve(null),
-    });
   });
 
   it('shows the loading skeleton while forecast data is loading', () => {
@@ -117,10 +101,7 @@ describe('WeatherPage', () => {
     useWeather.mockReturnValue({
       loading: false,
       error: null,
-      location: {
-        name: 'New York',
-        state: 'NY',
-      },
+      location: { name: 'New York', state: 'NY' },
       data: {
         current: { temperature: 72 },
         forecastByDay: [
@@ -135,9 +116,6 @@ describe('WeatherPage', () => {
         ],
       },
     });
-    builderGet.mockReturnValue({
-      promise: () => Promise.resolve({ id: 'weather-content' }),
-    });
 
     renderWeatherPage();
 
@@ -145,7 +123,6 @@ describe('WeatherPage', () => {
       expect(addLocation).toHaveBeenCalledWith('10001', 'New York', 'NY');
     });
 
-    expect(builderGet).toHaveBeenCalledWith('weather-page', { url: '/weather/10001' });
     expect(screen.getByTestId('current-conditions')).toHaveTextContent('New York, NY');
     expect(screen.getByTestId('forecast-day-2026-03-21')).toHaveTextContent('selected');
     expect(screen.getByTestId('forecast-chart')).toHaveTextContent('2026-03-21T09:00');
@@ -155,9 +132,5 @@ describe('WeatherPage', () => {
 
     expect(screen.getByTestId('forecast-chart')).toHaveTextContent('2026-03-22T12:00');
     expect(screen.getByTestId('hourly-table')).toHaveTextContent('2026-03-22T12:00');
-
-    await waitFor(() => {
-      expect(screen.getByTestId('builder-weather-page')).toHaveTextContent('weather-content');
-    });
   });
 });

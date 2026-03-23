@@ -1,6 +1,6 @@
 # Forecast4U
 
-A proof-of-value weather forecast prototype built with **React + Vite**, **Builder.io**, and **IBM Carbon Design System** for Forecast4U.
+A proof-of-value weather forecast prototype built with **React + Vite**, **Builder.io Fusion**, and **IBM Carbon Design System** for Forecast4U.
 
 ## Live Demo
 
@@ -12,12 +12,12 @@ A proof-of-value weather forecast prototype built with **React + Vite**, **Build
 - **5-Day Forecast** with 3-hour interval detail for any US ZIP code
 - **Interactive Charts** — temperature + precipitation visualization via Recharts
 - **IBM Carbon Design System** — fully themed UI with light/dark mode
-- **Builder.io Visual CMS** — registered Carbon + custom components for drag-and-drop editing
+- **Builder.io Fusion** — AI visual development with indexed Carbon design system and enforced coding standards
 - **Geolocation** — auto-detect user's location
 - **Saved Locations** — recent searches persisted locally
 - **Responsive Design** — mobile-first layout using Carbon Grid
 - **Unit Tests** — Vitest + React Testing Library with auto-testing via AGENTS.md
-- **Storybook** — IBM Carbon component library for the design team
+- **Storybook** — IBM Carbon component library with Forecast4U brand reskin
 
 ## Tech Stack
 
@@ -25,7 +25,7 @@ A proof-of-value weather forecast prototype built with **React + Vite**, **Build
 |-------|-----------|
 | Framework | React 18 + Vite |
 | Design System | IBM Carbon (`@carbon/react`) |
-| CMS | Builder.io (`@builder.io/react`) |
+| Visual Development | Builder.io Fusion (`@builder.io/react`) |
 | Weather API | [Open-Meteo](https://open-meteo.com/) (free, no key required) |
 | Charts | Recharts |
 | Testing | Vitest + React Testing Library |
@@ -39,7 +39,7 @@ A proof-of-value weather forecast prototype built with **React + Vite**, **Build
 Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/forecast4u.git
+git clone https://github.com/sdibella/forecast4u.git
 cd forecast4u
 cp .env.example .env
 # Edit .env and add your Builder.io public API key
@@ -81,7 +81,7 @@ docker compose run --rm dev npm run test:coverage
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/forecast4u.git
+git clone https://github.com/sdibella/forecast4u.git
 cd forecast4u
 npm install
 ```
@@ -118,7 +118,7 @@ npm run preview       # Preview production build locally
 
 ## Storybook (Design System)
 
-The `storybook/` subdirectory contains a standalone Storybook application showcasing IBM Carbon components.
+The `storybook/` subdirectory contains a standalone Storybook application showcasing IBM Carbon components, including a Forecast4U brand reskin.
 
 ```bash
 cd storybook
@@ -137,6 +137,7 @@ Open [http://localhost:6006](http://localhost:6006) to browse the component libr
 - **Notification** — inline, toast, actionable alerts
 - **Navigation** — header, breadcrumbs, tabs
 - **Toggle** — dark mode, settings panel patterns
+- **Design System / Brand Reskin** — Forecast4U brand theme vs. IBM Carbon default, token override reference
 
 ## Project Structure
 
@@ -144,20 +145,23 @@ Open [http://localhost:6006](http://localhost:6006) to browse the component libr
 forecast4u/
 ├── src/
 │   ├── components/
-│   │   ├── builder-registry.js    # Builder.io component registration
+│   │   ├── builder-registry.js    # Components registered with Builder.io visual editor
 │   │   ├── weather/               # Weather display components
 │   │   ├── layout/                # App shell (header, etc.)
 │   │   └── common/                # Shared components (skeletons, etc.)
 │   ├── pages/
 │   │   ├── HomePage.jsx           # Landing page with search
-│   │   ├── WeatherPage.jsx        # /weather/:zip forecast page
-│   │   └── CatchAllPage.jsx       # Builder.io managed pages
+│   │   └── WeatherPage.jsx        # /weather/:zip forecast page
 │   ├── hooks/                     # Custom React hooks
 │   ├── utils/                     # API clients, helpers, weather codes
 │   └── styles/                    # Global SCSS
 ├── storybook/                     # Storybook application (subdirectory)
 │   ├── .storybook/                # Storybook config
-│   └── src/stories/               # Component stories
+│   ├── src/stories/               # Component stories
+│   └── src/themes/                # Forecast4U brand token overrides
+├── .builder/rules/                # Builder.io Fusion scoped AI coding rules
+├── .builderrules                  # Root-level Builder.io AI rules
+├── builder.config.json            # Builder.io design system config
 ├── AGENTS.md                      # Builder.io agent auto-testing config
 ├── vercel.json                    # Vercel SPA routing config
 └── vite.config.js                 # Vite + Vitest config
@@ -169,29 +173,53 @@ forecast4u/
 |-------|-------------|
 | `/` | Home page with ZIP search, geolocation, saved locations |
 | `/weather/:zip` | 5-day forecast for a given ZIP code |
-| `/*` | Builder.io managed catch-all pages |
 
-## Builder.io Integration
+## Builder.io Fusion Integration
 
-### Why Builder.io?
+### What is Builder.io Fusion?
 
-Builder.io solves the **developer bottleneck problem** in content-driven applications. Without it, every headline change, campaign banner, or page variant requires a developer ticket, a sprint, and a deploy. With Builder.io, non-developers can publish directly using registered, governed components — while developers focus on core product logic.
+Builder.io Fusion is an AI-powered visual development platform that connects directly to your codebase. Unlike a traditional CMS, Fusion doesn't manage runtime content — it accelerates development by giving teams a visual editor that understands your actual components, coding conventions, and design system.
 
-| What was built | What it enables for the buyer |
+The core problem it solves: **the design-to-code handoff**. Designers work in Figma. Developers translate those designs by hand. Builder.io Fusion eliminates that translation layer.
+
+### Why it matters for Forecast4U
+
+| What was configured | What it enables for the team |
 |---|---|
-| Carbon components registered in Builder | Marketing updates copy, CTAs, and layout without filing a JIRA ticket |
-| `AGENTS.md` auto-testing rules | Dev team gets test coverage on every change without altering their PR process |
-| GitHub Actions design system indexing | Design system governance is automatic — Carbon components stay in sync with the codebase on every push |
-| `CatchAllPage` Builder catch-all route | Content team launches new landing pages without a code deploy |
-| `weather-page` model on `/weather/:zip` | Marketers can overlay contextual banners, alerts, or promotions on any forecast page — no engineering required |
+| `builder.config.json` — IBM Carbon indexed as design system | The AI generates code using Carbon components, not raw HTML — design system compliance is automatic |
+| `.builderrules` + `.builder/rules/` — scoped AI coding rules | Every AI-generated change follows Forecast4U's conventions: Carbon tokens only, no hardcoded hex, components registered in the editor |
+| `AGENTS.md` — auto-testing rules | Every code change the AI makes automatically includes tests — no one has to ask |
+| GitHub Actions `builder-index.yml` — auto-indexes on push to `main` | The design system index stays current automatically; the visual editor always reflects the real deployed component set |
+| `builder-registry.js` — components registered with typed inputs | Developers define the component API; the visual editor exposes those components to designers and AI with validated prop schemas |
 
-### The Dev/Non-Dev Contract
+### Opening the Visual Editor
 
-Developers register components with typed, validated `inputs`. Non-developers compose pages from those components in the visual editor. The contract prevents brand drift and protects the codebase while removing the content bottleneck.
+To use Builder.io Fusion's visual editor against the local development server:
+
+```bash
+npm run dev   # Start the dev server first
+
+# In a second terminal:
+npx "@builder.io/dev-tools@latest" launch -c "npm run dev"
+```
+
+This opens the Builder.io visual editor connected to the running app. The indexed IBM Carbon design system is available in the component panel. Changes made in the visual editor produce code — not runtime CMS content.
+
+### Design System Governance
+
+The `.github/workflows/builder-index.yml` workflow runs `npx @builder.io/dev-tools index-repo` on every push to `main` that touches `src/components/`. The registry is always current — the visual editor and AI always work from the real, deployed component set.
+
+```yaml
+- name: Index IBM Carbon design system into Builder.io
+  run: |
+    npx "@builder.io/dev-tools@latest" index-repo \
+      --designSystemPackage @carbon/react \
+      --designSystemName "IBM Carbon"
+```
 
 ### Registered Components
 
-Custom components available in the Builder.io visual editor:
+Components available in the Builder.io visual editor:
 
 **IBM Carbon:**
 Button, Text Input, Search, Tile, Clickable Tile, Tag, Notification, Toggle, Link
@@ -199,20 +227,13 @@ Button, Text Input, Search, Tile, Clickable Tile, Tag, Notification, Toggle, Lin
 **Forecast4U Custom:**
 Current Conditions, Daily Forecast Card, Forecast Chart, Hourly Detail Table
 
-### Auto-Testing
-
-The `AGENTS.md` file configures Builder.io's agent to automatically generate unit tests for any code changes, ensuring test coverage is maintained across the project.
-
-### Design System Indexing
-
-The `.github/workflows/builder-index.yml` workflow runs `npx @builder.io/dev-tools index-repo` on every push to `main` that touches `src/components/`. This keeps the IBM Carbon component library visible and current in the Builder.io visual editor — designers always work from the real, deployed component set, not a stale snapshot.
-
 ## Design Decisions
 
 - **Open-Meteo API**: Chosen for its rich hourly data (16 days), zero-config setup (no API key), and generous rate limits — ideal for demos.
-- **Carbon Design System**: Requested by the Forecast4U product team. Supports native theming for light/dark mode with minimal custom CSS.
+- **Carbon Design System**: Requested by the Forecast4U product team. Supports native theming for light/dark mode with minimal custom CSS. Indexed into Builder.io so AI-generated code stays on-brand automatically.
 - **Recharts**: Lightweight, declarative charting that composes naturally with React and Carbon's design tokens.
 - **Client-side geocoding**: ZIP-to-coordinates conversion happens client-side via Open-Meteo's geocoding API, keeping the architecture simple (no server needed).
+- **Builder.io Fusion over Publish**: This prototype uses Fusion (visual development + AI code generation) rather than Publish (headless CMS). Fusion is the right fit for a dev team looking to accelerate feature development while enforcing design system consistency.
 
 ## Deployment
 
