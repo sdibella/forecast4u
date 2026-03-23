@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tag, Divider } from '@carbon/react';
+import { Button, Tag } from '@carbon/react';
 import { Share, Location, PartlyCloudy, Rain, Hail, Snowflake, Windy } from '@carbon/react/icons';
 
 const conditionIcons = {
@@ -19,6 +19,19 @@ const conditionLabels = {
   snowy: 'Snowy',
   windy: 'Windy',
 };
+
+function SectionDivider() {
+  return (
+    <hr
+      aria-hidden="true"
+      style={{
+        margin: 0,
+        border: 0,
+        borderTop: '1px solid var(--cds-border-subtle)',
+      }}
+    />
+  );
+}
 
 export default function WeatherShareCard({
   city = 'New York',
@@ -117,7 +130,7 @@ export default function WeatherShareCard({
         </div>
       </div>
 
-      <Divider />
+      <SectionDivider />
 
       {/* Stats row */}
       <div
@@ -150,7 +163,7 @@ export default function WeatherShareCard({
         ))}
       </div>
 
-      <Divider />
+      <SectionDivider />
 
       {/* Footer */}
       <div
