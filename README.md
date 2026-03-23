@@ -4,8 +4,8 @@ A proof-of-value weather forecast prototype built with **React + Vite**, **Build
 
 ## Live Demo
 
-- **Prototype**: [Deployed URL] _(update after deploying to Vercel)_
-- **Builder.io Project**: [Builder.io Dashboard](https://builder.io/app/projects)
+- **Prototype**: [https://forecast4u-5yp76jop5-sdibellas-projects.vercel.app/](https://forecast4u-5yp76jop5-sdibellas-projects.vercel.app/)
+- **Builder.io Project**: [https://builder.io/app/projects/ec5110b995004210956d69c2809e11ac](https://builder.io/app/projects/ec5110b995004210956d69c2809e11ac)
 
 ## Features
 
@@ -173,6 +173,22 @@ forecast4u/
 
 ## Builder.io Integration
 
+### Why Builder.io?
+
+Builder.io solves the **developer bottleneck problem** in content-driven applications. Without it, every headline change, campaign banner, or page variant requires a developer ticket, a sprint, and a deploy. With Builder.io, non-developers can publish directly using registered, governed components — while developers focus on core product logic.
+
+| What was built | What it enables for the buyer |
+|---|---|
+| Carbon components registered in Builder | Marketing updates copy, CTAs, and layout without filing a JIRA ticket |
+| `AGENTS.md` auto-testing rules | Dev team gets test coverage on every change without altering their PR process |
+| GitHub Actions design system indexing | Design system governance is automatic — Carbon components stay in sync with the codebase on every push |
+| `CatchAllPage` Builder catch-all route | Content team launches new landing pages without a code deploy |
+| `weather-page` model on `/weather/:zip` | Marketers can overlay contextual banners, alerts, or promotions on any forecast page — no engineering required |
+
+### The Dev/Non-Dev Contract
+
+Developers register components with typed, validated `inputs`. Non-developers compose pages from those components in the visual editor. The contract prevents brand drift and protects the codebase while removing the content bottleneck.
+
 ### Registered Components
 
 Custom components available in the Builder.io visual editor:
@@ -186,6 +202,10 @@ Current Conditions, Daily Forecast Card, Forecast Chart, Hourly Detail Table
 ### Auto-Testing
 
 The `AGENTS.md` file configures Builder.io's agent to automatically generate unit tests for any code changes, ensuring test coverage is maintained across the project.
+
+### Design System Indexing
+
+The `.github/workflows/builder-index.yml` workflow runs `npx @builder.io/dev-tools index-repo` on every push to `main` that touches `src/components/`. This keeps the IBM Carbon component library visible and current in the Builder.io visual editor — designers always work from the real, deployed component set, not a stale snapshot.
 
 ## Design Decisions
 
